@@ -1,0 +1,8 @@
+{
+  "short_name": "Linked HU-CS",
+  "name": "Linked Hacettepe cs",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#17c1e8",
+  "background_color": "#ffffff"
+}
