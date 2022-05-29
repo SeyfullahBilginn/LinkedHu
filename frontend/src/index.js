@@ -4,12 +4,18 @@ import { BrowserRouter } from "react-router-dom";
 import App from "App";
 
 import { SoftUIControllerProvider } from "context";
+import { AuthProvider } from "contexts/AuthContext";
+import { CookiesProvider } from "react-cookie";
 
 ReactDOM.render(
   <BrowserRouter>
-    <SoftUIControllerProvider>
-      <App />
-    </SoftUIControllerProvider>
+    <CookiesProvider>
+      <AuthProvider>
+        <SoftUIControllerProvider>
+          <App />
+        </SoftUIControllerProvider>
+      </AuthProvider>
+    </CookiesProvider>
   </BrowserRouter>,
   document.getElementById("root")
 );

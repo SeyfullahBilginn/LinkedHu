@@ -16,7 +16,7 @@ function CoverLayout({ color, header, title, description, image, top, children }
         action={{
           type: "external",
           route: "https://www.cs.hacettepe.edu.tr",
-          label: "donate to the community",
+          label: "Hu-CS Web Site",
           color: "dark",
         }}
       />

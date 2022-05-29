@@ -18,15 +18,59 @@ import DefaultNavbarLink from "examples/Navbars/DefaultNavbar/DefaultNavbarLink"
 import DefaultNavbarMobile from "examples/Navbars/DefaultNavbar/DefaultNavbarMobile";
 
 import breakpoints from "assets/theme/base/breakpoints";
+import { useAuth } from "contexts/AuthContext";
 
 function DefaultNavbar({ transparent, light, action }) {
   const [mobileNavbar, setMobileNavbar] = useState(false);
   const [mobileView, setMobileView] = useState(false);
 
+  // const [routes, setRoutes] = useState([]);
+  const { userCookie } = useAuth();
+
   const openMobileNavbar = ({ currentTarget }) => setMobileNavbar(currentTarget.parentNode);
   const closeMobileNavbar = () => setMobileNavbar(false);
 
-  useEffect(() => {
+  function getRoutes() {
+    if (userCookie.user) {
+      return (
+        <SuiBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
+          <DefaultNavbarLink icon="donut_large" name="dashboard" route="/dashboard" light={light} />
+          <DefaultNavbarLink icon="person" name="profile" route="/profile" light={light} />
+          <DefaultNavbarLink
+            icon="account_circle"
+            name="sign up"
+            route="/authentication/sign-up"
+            light={light}
+          />
+          <DefaultNavbarLink
+            icon="key"
+            name="sign in"
+            route="/authentication/sign-in"
+            light={light}
+          />
+        </SuiBox>
+      );
+    }
+    return (
+      <SuiBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
+        <DefaultNavbarLink
+          icon="account_circle"
+          name="sign up"
+          route="/authentication/sign-up"
+          light={light}
+        />
+        <DefaultNavbarLink
+          icon="key"
+          name="sign in"
+          route="/authentication/sign-in"
+          light={light}
+        />
+      </SuiBox>
+    );
+  }
+
+  useEffect(async () => {
+    await getRoutes();
     // A function that sets the display state for the DefaultNavbarMobile.
     function displayMobileNavbar() {
       if (window.innerWidth < breakpoints.values.lg) {
@@ -79,20 +123,7 @@ function DefaultNavbar({ transparent, light, action }) {
           </SuiTypography>
         </SuiBox>
         <SuiBox color="inherit" display={{ xs: "none", lg: "flex" }} m={0} p={0}>
-          <DefaultNavbarLink icon="donut_large" name="dashboard" route="/dashboard" light={light} />
-          <DefaultNavbarLink icon="person" name="profile" route="/profile" light={light} />
-          <DefaultNavbarLink
-            icon="account_circle"
-            name="sign up"
-            route="/authentication/sign-up"
-            light={light}
-          />
-          <DefaultNavbarLink
-            icon="key"
-            name="sign in"
-            route="/authentication/sign-in"
-            light={light}
-          />
+          {getRoutes()}
         </SuiBox>
         {action &&
           (action.type === "internal" ? (

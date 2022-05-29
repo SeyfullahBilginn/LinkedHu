@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import { useState, useEffect } from "react";
 
 // react-router components
@@ -23,21 +24,25 @@ import {
   navbarRow,
   navbarMobileMenu,
 } from "examples/Navbars/DashboardNavbar/styles";
+// import SuiButton from "components/SuiButton";
 
+import { useAuth } from "contexts/AuthContext";
 // eslint-disable-next-line prettier/prettier
-import {
-  useSoftUIController,
-  setTransparentNavbar,
-  setMiniSidenav,
-} from "context";
-
+import SuiButton from "components/SuiButton";
+import { useSoftUIController, setTransparentNavbar, setMiniSidenav } from "context";
 // Image
-
 function ProfileNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar } = controller;
   const route = useLocation().pathname.split("/").slice(1);
+
+  const { logout } = useAuth();
+
+  function handleLogout() {
+    console.log("logout");
+    logout();
+  }
 
   useEffect(() => {
     // Setting the navbar type
@@ -90,6 +95,36 @@ function ProfileNavbar({ absolute, light, isMini }) {
                   {miniSidenav ? "menu_open" : "menu"}
                 </Icon>
               </IconButton>
+            </SuiBox>
+            <SuiBox pr={1} sx={{ display: "flex", direction: "row" }}>
+              <SuiButton
+                style={{ margin: 10 }}
+                variant="contained"
+                size="medium"
+                color="dark"
+                onClick={() => console.log("edit")}
+                href="/profile/edit"
+              >
+                <Icon>edit</Icon>
+              </SuiButton>
+              <SuiButton
+                style={{ margin: 10 }}
+                variant="contained"
+                size="medium"
+                color="dark"
+                onClick={() => console.log("settings")}
+              >
+                <Icon>settings</Icon>
+              </SuiButton>
+              <SuiButton
+                style={{ margin: 10 }}
+                variant="contained"
+                size="medium"
+                color="error"
+                onClick={() => handleLogout()}
+              >
+                <Icon>logout</Icon>
+              </SuiButton>
             </SuiBox>
           </SuiBox>
         )}

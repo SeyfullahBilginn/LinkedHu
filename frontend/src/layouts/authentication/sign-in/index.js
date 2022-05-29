@@ -13,14 +13,26 @@ import SuiButton from "components/SuiButton";
 
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
+import Alert from "@mui/material/Alert";
 
 // Images
 import curved9 from "assets/images/illustrations/hacettepe.jpg";
+// import UserService from "services/UserService";
+import { useAuth } from "../../../contexts/AuthContext";
 
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
-
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const [error, setError] = useState(true);
+  const [email, setEmail] = useState();
+  // eslint-disable-next-line no-unused-vars
+  const [password, setPassword] = useState();
+  const { signIn } = useAuth();
+
+  function onSubmit() {
+    // signIn return true if any error occurs, otherwise returns false
+    setError(signIn(email, password));
+  }
 
   return (
     <CoverLayout
@@ -28,6 +40,7 @@ function SignIn() {
       description="Enter your email and password to sign in"
       image={curved9}
     >
+      {error ? null : <Alert severity="error">Wrong password or email — please check it out</Alert>}
       <SuiBox component="form" role="form">
         <SuiBox mb={2}>
           <SuiBox mb={1} ml={0.5}>
@@ -35,7 +48,13 @@ function SignIn() {
               Email
             </SuiTypography>
           </SuiBox>
-          <SuiInput type="email" placeholder="Email" />
+          <SuiInput
+            type="email"
+            placeholder="Email"
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+          />
         </SuiBox>
         <SuiBox mb={2}>
           <SuiBox mb={1} ml={0.5}>
@@ -43,7 +62,13 @@ function SignIn() {
               Password
             </SuiTypography>
           </SuiBox>
-          <SuiInput type="password" placeholder="Password" />
+          <SuiInput
+            type="password"
+            placeholder="Password"
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
+          />
         </SuiBox>
         <SuiBox display="flex" alignItems="center">
           <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -57,7 +82,7 @@ function SignIn() {
           </SuiTypography>
         </SuiBox>
         <SuiBox mt={4} mb={1}>
-          <SuiButton variant="gradient" color="info" fullWidth>
+          <SuiButton variant="gradient" color="info" fullWidth onClick={() => onSubmit()}>
             sign in
           </SuiButton>
         </SuiBox>

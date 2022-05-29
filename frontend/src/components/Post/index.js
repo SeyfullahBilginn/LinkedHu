@@ -8,6 +8,10 @@ import SuiTypography from "components/SuiTypography";
 // Images
 import wavesWhite from "assets/images/shapes/waves-white.svg";
 import rocketWhite from "assets/images/illustrations/hacettepe.jpg";
+import ThumbUpOffAltOutlinedIcon from "@mui/icons-material/ThumbUpOffAltOutlined";
+import MessageOutlinedIcon from "@mui/icons-material/MessageOutlined";
+// import ThumbUpAltIcon from "@mui/icons-material/ThumbUpAlt";
+import Divider from "@mui/material/Divider";
 
 function Post() {
   return (
@@ -31,7 +35,7 @@ function Post() {
               </SuiBox>
               <SuiTypography
                 component="a"
-                href="#"
+                // href={`/jobs/${job.jobId}`}
                 variant="button"
                 color="text"
                 fontWeight="medium"
@@ -53,9 +57,82 @@ function Post() {
                   },
                 }}
               >
-                Likes, comments
+                See More
                 <Icon sx={{ fontWeight: "bold" }}>arrow_forward</Icon>
               </SuiTypography>
+              <Divider />
+              <SuiBox>
+                <SuiTypography
+                  variant="button"
+                  fontWeight="medium"
+                  sx={{
+                    border: 2.5,
+                    borderRadius: 2,
+                    padding: 0.6,
+                    mt: "auto",
+                    mr: "auto",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+
+                    "& .material-icons-round": {
+                      fontSize: "1.125rem",
+                      transform: `translate(2px, -0.5px)`,
+                      transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
+                    },
+
+                    "&:hover .material-icons-round, &:focus .material-icons-round": {
+                      transform: `translate(6px, -0.5px)`,
+                    },
+
+                    "&:hover": {
+                      color: "rgb(60,180,250)",
+                    },
+                  }}
+                >
+                  Like
+                  <Icon sx={{ fontWeight: "bold", marginX: "6px" }} fontSize="small">
+                    <ThumbUpOffAltOutlinedIcon />
+                  </Icon>
+                </SuiTypography>
+                <SuiTypography
+                  variant="button"
+                  fontWeight="medium"
+                  sx={{
+                    border: 2.5,
+                    borderRadius: 2,
+                    marginLeft: 1,
+                    padding: 0.6,
+                    mt: "auto",
+                    mr: "auto",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+
+                    "& .material-icons-round": {
+                      fontSize: "1.125rem",
+                      transform: `translate(2px, -0.5px)`,
+                      transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
+                    },
+
+                    "&:hover .material-icons-round, &:focus .material-icons-round": {
+                      transform: `translate(6px, -0.5px)`,
+                      color: "rgb(60,180,250)",
+                    },
+
+                    "&:hover": {
+                      color: "rgb(60,180,250)",
+                    },
+                  }}
+                >
+                  Comments
+                  <Icon sx={{ fontWeight: "bold", marginX: "6px" }} fontSize="small">
+                    <MessageOutlinedIcon />
+                  </Icon>
+                </SuiTypography>
+              </SuiBox>
             </SuiBox>
           </Grid>
           <Grid item xs={12} lg={5} sx={{ position: "relative", ml: "auto" }}>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // react-router components
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -31,15 +31,23 @@ import {
   setTransparentNavbar,
   setMiniSidenav,
 } from "context";
-
+import { useAuth } from "contexts/AuthContext";
+import SuiButton from "../../../components/SuiButton/index";
 
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useSoftUIController();
   const { miniSidenav, transparentNavbar, fixedNavbar } = controller;
   const route = useLocation().pathname.split("/").slice(1);
+  const [userRole, setUserRole] = useState();
+  const { userCookie } = useAuth();
 
-  useEffect(() => {
+  async function getUserRole() {
+    setUserRole(await userCookie.user.role);
+  }
+
+  useEffect(async () => {
+    await getUserRole();
     // Setting the navbar type
     if (fixedNavbar) {
       setNavbarType("sticky");
@@ -63,7 +71,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
 
     // Remove event listener on cleanup
     return () => window.removeEventListener("scroll", handleTransparentNavbar);
-  }, [dispatch, fixedNavbar]);
+  }, [dispatch, fixedNavbar, userRole]);
 
   const handleMiniSidenav = () => setMiniSidenav(dispatch, !miniSidenav);
 
@@ -85,6 +93,20 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 icon={{ component: "search", direction: "left" }}
               />
             </SuiBox>
+            <SuiButton
+              style={{ margin: 10 }}
+              component={Link}
+              to={
+                userCookie.user.role === "1"
+                  ? "/create-new-post-free-access"
+                  : "/create-new-post-restricted-access"
+              }
+              variant="gradient"
+              size="medium"
+              color="info"
+            >
+              Add Post
+            </SuiButton>
             <SuiBox color={light ? "white" : "inherit"}>
               <IconButton
                 size="medium"

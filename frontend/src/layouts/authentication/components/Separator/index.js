@@ -4,7 +4,7 @@ import Divider from "@mui/material/Divider";
 import SuiBox from "components/SuiBox";
 import SuiTypography from "components/SuiTypography";
 
-function Separator() {
+function Separator({ text }) {
   return (
     <SuiBox position="relative" py={0.25}>
       <Divider />
@@ -18,7 +18,7 @@ function Separator() {
         sx={{ transform: "translate(-50%, -60%)" }}
       >
         <SuiTypography variant="button" fontWeight="medium" color="secondary">
-          or
+          {text}
         </SuiTypography>
       </SuiBox>
     </SuiBox>
